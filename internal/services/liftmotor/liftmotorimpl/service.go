@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/tbe-team/raybot/internal/hardware/controller"
 	"github.com/tbe-team/raybot/internal/hardware/picserial"
 	"github.com/tbe-team/raybot/internal/services/liftmotor"
 	"github.com/tbe-team/raybot/pkg/validator"
@@ -18,18 +19,18 @@ type service struct {
 	validator validator.Validator
 
 	liftMotorStateRepo  liftmotor.LiftMotorStateRepository
-	picSerialController picserial.Controller
+	liftMotorController controller.LiftMotorController
 }
 
 func NewService(
 	validator validator.Validator,
 	liftMotorStateRepo liftmotor.LiftMotorStateRepository,
-	picSerialClient picserial.Controller,
+	liftMotorController controller.LiftMotorController,
 ) liftmotor.Service {
 	return &service{
 		validator:           validator,
 		liftMotorStateRepo:  liftMotorStateRepo,
-		picSerialController: picSerialClient,
+		liftMotorController: liftMotorController,
 	}
 }
 
@@ -50,25 +51,18 @@ func (s *service) SetCargoPosition(ctx context.Context, params liftmotor.SetCarg
 		return fmt.Errorf("validate params: %w", err)
 	}
 
-	if err := s.picSerialController.SetCargoPosition(ctx, params.MotorSpeed, params.Position); err != nil {
+	if err := s.liftMotorController.SetCargoPosition(ctx, params.MotorSpeed, params.Position); err != nil {
 		if errors.Is(err, picserial.ErrPICSerialNotConnected) {
 			return liftmotor.ErrCanNotControlLiftMotor
 		}
 		return fmt.Errorf("set cargo position: %w", err)
 	}
 
-	return s.liftMotorStateRepo.UpdateLiftMotorState(ctx, liftmotor.UpdateLiftMotorStateParams{
-		TargetPosition:    params.Position,
-		SetTargetPosition: true,
-		SetIsRunning:      true,
-		IsRunning:         true,
-		SetEnabled:        true,
-		Enabled:           true,
-	})
+	return nil
 }
 
 func (s *service) Stop(ctx context.Context) error {
-	if err := s.picSerialController.StopLiftCargoMotor(ctx); err != nil {
+	if err := s.liftMotorController.StopLiftCargoMotor(ctx); err != nil {
 		if errors.Is(err, picserial.ErrPICSerialNotConnected) {
 			return liftmotor.ErrCanNotControlLiftMotor
 		}

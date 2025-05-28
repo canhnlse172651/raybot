@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/tbe-team/raybot/internal/events"
-	"github.com/tbe-team/raybot/internal/hardware/espserial"
+	"github.com/tbe-team/raybot/internal/hardware/controller"
 	"github.com/tbe-team/raybot/internal/services/cargo"
 	"github.com/tbe-team/raybot/pkg/eventbus"
 	"github.com/tbe-team/raybot/pkg/validator"
@@ -16,20 +16,20 @@ type service struct {
 	publisher eventbus.Publisher
 
 	cargoRepo           cargo.Repository
-	espSerialController espserial.Controller
+	cargoDoorController controller.CargoDoorController
 }
 
 func NewService(
 	validator validator.Validator,
 	publisher eventbus.Publisher,
 	cargoRepo cargo.Repository,
-	espSerialController espserial.Controller,
+	cargoDoorController controller.CargoDoorController,
 ) cargo.Service {
 	return &service{
 		validator:           validator,
 		publisher:           publisher,
 		cargoRepo:           cargoRepo,
-		espSerialController: espSerialController,
+		cargoDoorController: cargoDoorController,
 	}
 }
 
@@ -100,35 +100,17 @@ func (s *service) UpdateCargoDoorMotorState(ctx context.Context, params cargo.Up
 }
 
 func (s *service) OpenCargoDoor(ctx context.Context, params cargo.OpenCargoDoorParams) error {
-	if err := s.espSerialController.OpenCargoDoor(ctx, params.Speed); err != nil {
+	if err := s.cargoDoorController.OpenCargoDoor(ctx, params.Speed); err != nil {
 		return fmt.Errorf("open cargo door: %w", err)
 	}
 
-	return s.cargoRepo.UpdateCargoDoorMotorState(ctx, cargo.UpdateCargoDoorMotorStateParams{
-		Direction:    cargo.DirectionOpen,
-		SetDirection: true,
-		Speed:        params.Speed,
-		SetSpeed:     true,
-		IsRunning:    true,
-		SetIsRunning: true,
-		Enabled:      true,
-		SetEnabled:   true,
-	})
+	return nil
 }
 
 func (s *service) CloseCargoDoor(ctx context.Context, params cargo.CloseCargoDoorParams) error {
-	if err := s.espSerialController.CloseCargoDoor(ctx, params.Speed); err != nil {
+	if err := s.cargoDoorController.CloseCargoDoor(ctx, params.Speed); err != nil {
 		return fmt.Errorf("close cargo door: %w", err)
 	}
 
-	return s.cargoRepo.UpdateCargoDoorMotorState(ctx, cargo.UpdateCargoDoorMotorStateParams{
-		Direction:    cargo.DirectionClose,
-		SetDirection: true,
-		Speed:        params.Speed,
-		SetSpeed:     true,
-		IsRunning:    true,
-		SetIsRunning: true,
-		Enabled:      true,
-		SetEnabled:   true,
-	})
+	return nil
 }
