@@ -3,7 +3,7 @@ import type { RobotState } from '@/types/robot-state'
 import BatteryCard from './BatteryCard.vue'
 import ConnectionsCard from './ConnectionsCard.vue'
 import LocationCard from './LocationCard.vue'
-import MotorsCard from './MotorsCard.vue'
+import SystemInfoCard from './SystemInfoCard.vue'
 
 const props = defineProps<{
   robotState: RobotState
@@ -12,14 +12,13 @@ const props = defineProps<{
 
 <template>
   <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2 lg:grid-cols-4">
+    <!-- Battery Card -->
     <BatteryCard
       :battery="props.robotState.battery"
     />
-    <MotorsCard
-      :lift-motor="props.robotState.liftMotor"
-      :drive-motor="props.robotState.driveMotor"
-      :cargo-door-motor="props.robotState.cargoDoorMotor"
-    />
+
+    <!-- Info Card -->
+    <SystemInfoCard />
 
     <!-- Location Card -->
     <LocationCard

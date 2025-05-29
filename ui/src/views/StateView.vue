@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { useQueryRobotState } from '@/composables/use-robot-state'
 
 const REFRESH_INTERVAL = 1000
+
 const refetchInterval = ref(REFRESH_INTERVAL)
 
 const { data: robotState, isPending, isError, error } = useQueryRobotState({
