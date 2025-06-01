@@ -30,6 +30,26 @@ packages:
     config:
     interfaces:
       Service:
+  github.com/tbe-team/raybot/internal/services/config:
+    config:
+    interfaces:
+      Service:
+  github.com/tbe-team/raybot/internal/services/dashboarddata:
+    config:
+    interfaces:
+      Service:
+  github.com/tbe-team/raybot/internal/services/apperrorcode:
+    config:
+    interfaces:
+      Service:
+  github.com/tbe-team/raybot/internal/services/peripheral:
+    config:
+    interfaces:
+      Service:
+  github.com/tbe-team/raybot/internal/services/system:
+    config:
+    interfaces:
+      Service:
   github.com/tbe-team/raybot/pkg/eventbus:
     config:
     interfaces:
