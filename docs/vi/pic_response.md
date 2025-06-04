@@ -41,14 +41,15 @@ Cấu trúc JSON:
 
 ### state_type
 
-| Loại |  Kiểu dữ liệu | Mô tả                           |
-|------|---------------|---------------------------------|
-| 0    | uint8         | Trạng thái pin                  |
-| 1    | uint8         | Trạng thái sạc                  |
-| 2    | uint8         | Trạng thái xả                   |
-| 3    | uint8         | Trạng thái cảm biến khoảng cách |
-| 4    | uint8         | Trạng thái động cơ nâng         |
-| 5    | uint8         | Trạng thái động cơ di chuyển    |
+| Loại |  Kiểu dữ liệu | Mô tả                                |
+|------|---------------|--------------------------------------|
+| 0    | uint8         | Trạng thái pin                       |
+| 1    | uint8         | Trạng thái sạc                       |
+| 2    | uint8         | Trạng thái xả                        |
+| 3    | uint8         | Trạng thái cảm biến khoảng cách      |
+| 4    | uint8         | Trạng thái động cơ nâng              |
+| 5    | uint8         | Trạng thái động cơ di chuyển         |
+| 6    | uint8         | Trạng thái công tắc hành trình 1     |
 
 ### data
 
@@ -124,7 +125,6 @@ Ví dụ phản hồi:
 
 ### 2.6. Trạng thái động cơ di chuyển
 
-
 | Trường | Kiểu dữ liệu | Khóa JSON | Mô tả |
 |-------|-----------|----------|-------------|
 | Direction | uint8 | direction | Hướng của động cơ di chuyển (0=Tiến/1=Lùi) |
@@ -135,6 +135,17 @@ Ví dụ phản hồi:
 Ví dụ phản hồi:
 ```
 >{"type":0,"state_type":5,"data":{"direction":0,"speed":50,"is_running":1,"enabled":1}}\r\n
+```
+
+### 2.7. Trạng thái công tắc hành trình 1
+
+| Trường | Kiểu dữ liệu | Khóa JSON | Mô tả |
+|-------|-----------|----------|-------------|
+| State | uint8 | state | Trạng thái của công tắc hành trình (0=false/1=true) |
+
+Ví dụ phản hồi:
+```
+>{"type":0,"state_type":6,"data":{"state":0}}\r\n
 ```
 
 ## 3. Phản hồi ACK
