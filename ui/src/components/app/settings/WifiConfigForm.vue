@@ -93,19 +93,21 @@ const onSubmit = form.handleSubmit((values) => {
     </h3>
 
     <FormField v-slot="{ value, handleChange }" type="checkbox" name="ap.enable">
-      <FormItem class="flex flex-row items-center justify-between p-4 border rounded-lg">
-        <div class="space-y-0.5">
-          <FormLabel>Enable AP</FormLabel>
+      <FormItem class="p-4 border rounded-lg">
+        <div class="flex items-center justify-between">
+          <div class="space-y-0.5">
+            <FormLabel>Enable AP</FormLabel>
+          </div>
+          <FormControl>
+            <Switch
+              :model-value="value"
+              :disabled="isPending"
+              @update:model-value="handleChange"
+            />
+          </FormControl>
         </div>
-        <FormControl>
-          <Switch
-            :model-value="value"
-            :disabled="isPending"
-            @update:model-value="handleChange"
-          />
-        </FormControl>
+        <FormMessage />
       </FormItem>
-      <FormMessage />
     </FormField>
 
     <FormField v-slot="{ componentField }" name="ap.ssid">
@@ -155,19 +157,21 @@ const onSubmit = form.handleSubmit((values) => {
     </h3>
 
     <FormField v-slot="{ value, handleChange }" type="checkbox" name="sta.enable">
-      <FormItem class="flex flex-row items-center justify-between p-4 border rounded-lg">
-        <div class="space-y-0.5">
-          <FormLabel>Enable STA</FormLabel>
+      <FormItem class="p-4 border rounded-lg">
+        <div class="flex items-center justify-between">
+          <div class="space-y-0.5">
+            <FormLabel>Enable STA</FormLabel>
+          </div>
+          <FormControl>
+            <Switch
+              :model-value="value"
+              :disabled="isPending"
+              @update:model-value="handleChange"
+            />
+          </FormControl>
         </div>
-        <FormControl>
-          <Switch
-            :model-value="value"
-            :disabled="isPending"
-            @update:model-value="handleChange"
-          />
-        </FormControl>
+        <FormMessage />
       </FormItem>
-      <FormMessage />
     </FormField>
 
     <FormField v-slot="{ componentField }" name="sta.ssid">
