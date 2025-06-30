@@ -50,6 +50,7 @@ Cấu trúc JSON:
 | 4    | uint8         | Trạng thái động cơ nâng              |
 | 5    | uint8         | Trạng thái động cơ di chuyển         |
 | 6    | uint8         | Trạng thái công tắc hành trình 1     |
+| 7    | uint8         | Trạng thái có vật thể trong hộp    |
 
 ### data
 
@@ -146,6 +147,17 @@ Ví dụ phản hồi:
 Ví dụ phản hồi:
 ```
 >{"type":0,"state_type":6,"data":{"state":0}}\r\n
+```
+
+### 2.8 Trạng thái vật thể trong hộp
+
+| Trường | Kiểu dữ liệu | Khóa JSON | Mô tả |
+|-------|-----------|----------|-------------|
+| Object | uint8 | object | Trạng thái có vật thể trong hộp (0=false/1=true) |
+
+Ví dụ phản hồi:
+```
+>{"type":0,"state_type":7,"data":{"object":0}}\r\n
 ```
 
 ## 3. Phản hồi ACK
