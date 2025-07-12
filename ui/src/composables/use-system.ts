@@ -36,11 +36,9 @@ export function useSystemStatusQuery(opts?: {
     queryKey: [SYSTEM_STATUS_QUERY_KEY],
     queryFn: () => systemAPI.getStatus({
       ...opts?.axiosOpts,
-      doNotShowLoading: true, // Ẩn progress bar cho system status
+     
     }),
-    refetchInterval: opts?.refetchInterval || 10000, // Tăng lên 10 giây
-    refetchOnWindowFocus: false, // Không refetch khi focus window
-    refetchOnMount: true, // Chỉ fetch khi mount
-    staleTime: 5000, // Data được coi là fresh trong 5 giây
+    refetchInterval: opts?.refetchInterval || 10000
+   
   })
 }
