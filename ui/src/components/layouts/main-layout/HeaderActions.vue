@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import { useColorMode } from "@vueuse/core";
-import { Moon, Pause, Sun } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
-import { useSystemStopEmergencyMutation } from "@/composables/use-system";
-import { useConfirmationStore } from "@/stores/confirmation-store";
+import { useColorMode } from '@vueuse/core'
+import { Moon, Pause, Sun } from 'lucide-vue-next'
+import { Button } from '@/components/ui/button'
+import { useSystemStopEmergencyMutation } from '@/composables/use-system'
+import { useConfirmationStore } from '@/stores/confirmation-store'
 
-const { store } = useColorMode();
+const { store } = useColorMode()
 
-const { mutate: stopEmergency } = useSystemStopEmergencyMutation();
-const { openConfirmation } = useConfirmationStore();
+const { mutate: stopEmergency } = useSystemStopEmergencyMutation()
+const { openConfirmation } = useConfirmationStore()
 
 function handleEmergencyStop() {
   openConfirmation({
-    title: "Stop Emergency",
+    title: 'Stop Emergency',
     description:
-      "Stopping emergency will stop all motors, canceling all commands. Are you sure you want to continue?",
-    actionLabel: "Confirm",
-    cancelLabel: "Cancel",
+      'Stopping emergency will stop all motors, canceling all commands. Are you sure you want to continue?',
+    actionLabel: 'Confirm',
+    cancelLabel: 'Cancel',
     onAction: () => {
       stopEmergency(undefined, {
         onSuccess: () => {
-          notification.success("Stop emergency successfully");
+          notification.success('Stop emergency successfully')
         },
         onError: () => {
-          notification.error("Failed to stop emergency");
+          notification.error('Failed to stop emergency')
         },
-      });
+      })
     },
     onCancel: () => {},
-  });
+  })
 }
 </script>
 

@@ -6,10 +6,8 @@ export interface SystemInfo {
   uptime: number
 }
 
-
 export interface SystemStatusResponse {
-  status: SystemStatusType;
+  status: SystemStatusType
 }
 
 export type SystemStatusType = 'NORMAL' | 'ERROR'
-

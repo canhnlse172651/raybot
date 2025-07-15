@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { AlertTriangle, CheckCircle } from 'lucide-vue-next'
+import { useSystemStatusQuery } from '@/composables/use-system'
+
+const { data: systemStatus } = useSystemStatusQuery({
+  refetchInterval: 3000,
+  axiosOpts: {
+    doNotShowLoading: true,
+  },
+})
+
+const showStatus = computed(() => {
+  return systemStatus.value?.status
+})
+</script>
+
 <template>
   <div class="absolute top-0 left-10 z-50 m-2 ml-2 sm:ml-4 lg:ml-4">
     <!-- Error Status -->
@@ -19,19 +35,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { useSystemStatusQuery } from "@/composables/use-system";
-import { AlertTriangle, CheckCircle } from "lucide-vue-next";
-
-const { data: systemStatus } = useSystemStatusQuery({
-  refetchInterval: 3000,
-  axiosOpts: {
-    doNotShowLoading: true,
-  },
-});
-
-const showStatus = computed(() => {
-  return systemStatus.value?.status;
-});
-</script>

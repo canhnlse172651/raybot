@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { useLocalStorage } from "@vueuse/core";
-import clsx from "clsx";
-import { Notification, Notivue } from "notivue";
-import ConfirmationDialog from "@/components/shared/ConfirmationDialog.vue";
-import ScrollToTopButton from "@/components/shared/ScrollToTopButton.vue";
-import { Separator } from "@/components/ui/separator";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import AppSidebar from "./AppSidebar.vue";
-import HeaderActions from "./HeaderActions.vue";
-import HeaderWarning from "./HeaderWarning.vue";
+import { useLocalStorage } from '@vueuse/core'
+import clsx from 'clsx'
+import { Notification, Notivue } from 'notivue'
+import ConfirmationDialog from '@/components/shared/ConfirmationDialog.vue'
+import ScrollToTopButton from '@/components/shared/ScrollToTopButton.vue'
+import { Separator } from '@/components/ui/separator'
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
+import AppSidebar from './AppSidebar.vue'
+import HeaderActions from './HeaderActions.vue'
+import HeaderWarning from './HeaderWarning.vue'
 
-const open = useLocalStorage("sidebar", true);
+const open = useLocalStorage('sidebar', true)
 </script>
 
 <template>
