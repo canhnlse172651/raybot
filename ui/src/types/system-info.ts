@@ -6,11 +6,10 @@ export interface SystemInfo {
   uptime: number
 }
 
-export enum SystemStatus {
-  NORMAL = 'NORMAL',
-  ERROR = 'ERROR',
-}
 
 export interface SystemStatusResponse {
-  status: SystemStatus;
+  status: SystemStatusType;
 }
+
+export type SystemStatusType = 'NORMAL' | 'ERROR'
+

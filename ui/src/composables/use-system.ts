@@ -36,9 +36,9 @@ export function useSystemStatusQuery(opts?: {
     queryKey: [SYSTEM_STATUS_QUERY_KEY],
     queryFn: () => systemAPI.getStatus({
       ...opts?.axiosOpts,
-     
+      
     }),
-    refetchInterval: opts?.refetchInterval || 10000
+    refetchInterval: opts?.refetchInterval
    
   })
 }
