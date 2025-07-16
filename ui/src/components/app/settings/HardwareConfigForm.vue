@@ -29,6 +29,10 @@ const serialConfigSchema = z.object({
   readTimeout: z.number().int().nonnegative('Read timeout must be non-negative'),
 })
 
+const ledConfigSchema = z.object({
+  pin: z.string().min(1, 'Pin is required'),
+})
+
 const hardwareConfigSchema = z.object({
   esp: z.object({
     serial: serialConfigSchema,
@@ -39,6 +43,10 @@ const hardwareConfigSchema = z.object({
     serial: serialConfigSchema,
     enableAck: z.boolean().default(false),
     commandAckTimeout: z.number().int().nonnegative('Command ack timeout must be non-negative'),
+  }),
+  leds: z.object({
+    system: ledConfigSchema,
+    alert: ledConfigSchema,
   }),
 }).superRefine((data, ctx) => {
   if (data.esp.serial.port === data.pic.serial.port) {
@@ -62,6 +70,7 @@ const form = useForm({
   validationSchema: toTypedSchema(hardwareConfigSchema),
   initialValues: props.initialValues,
 })
+
 
 const onSubmit = form.handleSubmit((values) => {
   mutate(values, {
@@ -452,6 +461,42 @@ function fetchPorts(newValue: boolean) {
                   </FormItem>
                 </FormField>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LEDs Configuration Section -->
+      <div class="space-y-3">
+        <h4 class="text-lg font-medium tracking-tight">
+          LEDs Configuration
+        </h4>
+        <div class="px-4 space-y-6">
+          <div class="space-y-6">
+            <h4 class="pb-2 text-lg font-medium border-b">
+              LED Pins
+            </h4>
+
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <FormField v-slot="{ componentField }" name="leds.system.pin">
+                <FormItem>
+                  <FormLabel>System LED Pin</FormLabel>
+                  <FormControl>
+                    <Input v-bind="componentField" :disabled="isPending" placeholder="e.g. GPIO2" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
+
+              <FormField v-slot="{ componentField }" name="leds.alert.pin">
+                <FormItem>
+                  <FormLabel>Alert LED Pin</FormLabel>
+                  <FormControl>
+                    <Input v-bind="componentField" :disabled="isPending" placeholder="e.g. GPIO2" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              </FormField>
             </div>
           </div>
         </div>
