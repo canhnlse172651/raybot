@@ -7,6 +7,8 @@ export const CLOUD_CONFIG_QUERY_KEY = 'cloudConfig'
 export const HTTP_CONFIG_QUERY_KEY = 'httpConfig'
 export const WIFI_CONFIG_QUERY_KEY = 'wifiConfig'
 export const COMMAND_CONFIG_QUERY_KEY = 'commandConfig'
+export const BATTERY_MONITORING_CONFIG_QUERY_KEY = 'batteryMonitoringConfig'
+
 export function useLogConfigQuery() {
   return useQuery({
     queryKey: [LOG_CONFIG_QUERY_KEY],
@@ -82,5 +84,18 @@ export function useCommandConfigQuery() {
 export function useCommandConfigMutation() {
   return useMutation({
     mutationFn: configAPI.updateCommandConfig,
+  })
+}
+
+export function useBatteryMonitoringConfigQuery() {
+  return useQuery({
+    queryKey: [BATTERY_MONITORING_CONFIG_QUERY_KEY],
+    queryFn: () => configAPI.getBatteryMonitoringConfig(),
+  })
+}
+
+export function useBatteryMonitoringConfigMutation() {
+  return useMutation({
+    mutationFn: configAPI.updateBatteryMonitoringConfig,
   })
 }

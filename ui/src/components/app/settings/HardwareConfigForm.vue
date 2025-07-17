@@ -48,6 +48,9 @@ const hardwareConfigSchema = z.object({
     system: ledConfigSchema,
     alert: ledConfigSchema,
   }),
+    system: ledConfigSchema.default({ pin: '' }),
+    alert: ledConfigSchema.default({ pin: '' }),
+  }).default({ system: { pin: '' }, alert: { pin: '' } }),
 }).superRefine((data, ctx) => {
   if (data.esp.serial.port === data.pic.serial.port) {
     ctx.addIssue({
@@ -59,6 +62,19 @@ const hardwareConfigSchema = z.object({
       code: z.ZodIssueCode.custom,
       message: 'ESP and PIC cannot use the same port',
       path: ['pic.serial.port'],
+    })
+  }
+
+  if (data.leds.system.pin === data.leds.alert.pin) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'System and alert LEDs cannot use the same pin',
+      path: ['leds.system.pin'],
+    })
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'System and alert LEDs cannot use the same pin',
+      path: ['leds.alert.pin'],
     })
   }
 })
@@ -499,6 +515,36 @@ function fetchPorts(newValue: boolean) {
               </FormField>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEDs Section -->
+    <div class="space-y-3">
+      <h4 class="text-lg font-medium tracking-tight">
+        LED Configuration
+      </h4>
+      <div class="px-4 space-y-6">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <FormField v-slot="{ componentField }" name="leds.system.pin">
+            <FormItem>
+              <FormLabel>System LED Pin</FormLabel>
+              <FormControl>
+                <Input v-bind="componentField" :disabled="isPending" placeholder="e.g. GPIO2" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          </FormField>
+
+          <FormField v-slot="{ componentField }" name="leds.alert.pin">
+            <FormItem>
+              <FormLabel>Alert LED Pin</FormLabel>
+              <FormControl>
+                <Input v-bind="componentField" :disabled="isPending" placeholder="e.g. GPIO2" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          </FormField>
         </div>
       </div>
     </div>
